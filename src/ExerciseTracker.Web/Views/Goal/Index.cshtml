@@ -1,0 +1,46 @@
+@model GoalCreateViewModel
+@using ExerciseTracker.Domain.Enums
+@{
+    ViewData["Title"] = "Metas";
+}
+
+<section class="content-grid">
+    <article class="content-card">
+        <h1>Crear meta</h1>
+        <form asp-action="Create" method="post" id="goal-form">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="GoalType" class="form-label"></label>
+                <select asp-for="GoalType" asp-items="Html.GetEnumSelectList<GoalType>()" class="form-select"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="TargetValue" class="form-label"></label>
+                <input asp-for="TargetValue" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="StartDate" class="form-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="EndDate" class="form-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+            </div>
+            <button class="btn btn-primary" type="submit">Guardar meta</button>
+        </form>
+    </article>
+    <article class="content-card">
+        <h2>Metas registradas</h2>
+        <ul class="list-clean" id="goal-list">
+            @foreach (var goal in Model.Goals)
+            {
+                <li>@goal.GoalType - @goal.TargetValue (@goal.StartDate.ToShortDateString() a @goal.EndDate.ToShortDateString())</li>
+            }
+        </ul>
+    </article>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/goal.js" asp-append-version="true"></script>
+}

@@ -1,0 +1,53 @@
+@model NotificationViewModel
+@{
+    ViewData["Title"] = "Recordatorios";
+}
+
+<section class="content-grid">
+    <article class="content-card">
+        <h1>Crear recordatorio</h1>
+        <form asp-action="CreateReminder" method="post" id="reminder-form">
+            @Html.AntiForgeryToken()
+            <div class="mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Message" class="form-label"></label>
+                <textarea asp-for="Message" class="form-control"></textarea>
+            </div>
+            <div class="mb-3">
+                <label asp-for="ReminderTime" class="form-label"></label>
+                <input asp-for="ReminderTime" class="form-control" />
+            </div>
+            <button class="btn btn-primary" type="submit">Guardar recordatorio</button>
+        </form>
+    </article>
+    <article class="content-card">
+        <h2>Recordatorios activos</h2>
+        <ul class="list-clean" id="reminder-list">
+            @foreach (var reminder in Model.Reminders)
+            {
+                <li>@reminder.Title - @reminder.ReminderTime</li>
+            }
+        </ul>
+        <h2 class="mt-4">Notificaciones</h2>
+        <ul class="list-clean" id="notification-list">
+            @foreach (var notification in Model.Notifications)
+            {
+                <li>
+                    <span>@notification.Title - @notification.Message</span>
+                    @if (!notification.IsRead)
+                    {
+                        <button class="btn btn-sm btn-outline-primary mark-read" data-id="@notification.Id">Marcar leida</button>
+                    }
+                </li>
+            }
+        </ul>
+    </article>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/notifications.js" asp-append-version="true"></script>
+}

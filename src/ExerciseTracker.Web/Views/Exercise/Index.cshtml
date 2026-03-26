@@ -1,0 +1,54 @@
+@model ExerciseCreateViewModel
+@using ExerciseTracker.Domain.Enums
+@{
+    ViewData["Title"] = "Registrar ejercicio";
+}
+
+<section class="content-grid">
+    <article class="content-card">
+        <h1>Registrar ejercicio</h1>
+        @if (TempData["SuccessMessage"] is string message)
+        {
+            <div class="alert alert-success">@message</div>
+        }
+        <form asp-action="Create" method="post" id="exercise-form">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="ExerciseType" class="form-label"></label>
+                <select asp-for="ExerciseType" asp-items="Html.GetEnumSelectList<ExerciseType>()" class="form-select"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DurationMinutes" class="form-label"></label>
+                <input asp-for="DurationMinutes" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Intensity" class="form-label"></label>
+                <select asp-for="Intensity" asp-items="Html.GetEnumSelectList<IntensityLevel>()" class="form-select"></select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="PerformedOn" class="form-label"></label>
+                <input asp-for="PerformedOn" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="Notes" class="form-label"></label>
+                <textarea asp-for="Notes" class="form-control"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Guardar actividad</button>
+        </form>
+    </article>
+    <article class="content-card">
+        <h2>Historial reciente</h2>
+        <ul class="list-clean" id="exercise-history">
+            @foreach (var item in Model.History)
+            {
+                <li>@item.PerformedOn.ToShortDateString() - @item.ExerciseType - @item.DurationMinutes min - @item.Intensity</li>
+            }
+        </ul>
+    </article>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/exercise.js" asp-append-version="true"></script>
+}

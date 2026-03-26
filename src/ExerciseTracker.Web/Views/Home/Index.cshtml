@@ -1,0 +1,27 @@
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<section class="hero">
+    <div>
+        <span class="eyebrow">Exercise Tracker</span>
+        <h1>Seguimiento diario de ejercicio con enfoque movil.</h1>
+        <p>
+            Registra actividades, controla metas, revisa estadisticas y administra recordatorios
+            desde una solucion MVC con Clean Architecture.
+        </p>
+        <div class="hero-actions">
+            <a class="btn btn-primary" asp-controller="Account" asp-action="Login">Iniciar sesion</a>
+            <a class="btn btn-outline-light" asp-controller="Account" asp-action="Register">Registrarse</a>
+        </div>
+    </div>
+    <div class="hero-card">
+        <h2>Flujo principal</h2>
+        <ol>
+            <li>Ingresar a la aplicacion</li>
+            <li>Registrar una actividad</li>
+            <li>Recibir confirmacion</li>
+            <li>Consultar progreso y estadisticas</li>
+        </ol>
+    </div>
+</section>

@@ -1,0 +1,47 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<section class="section-grid">
+    <div class="stat-card">
+        <span>Ejercicios hoy</span>
+        <strong>@Model.Summary.ExercisesToday</strong>
+    </div>
+    <div class="stat-card">
+        <span>Minutos hoy</span>
+        <strong>@Model.Summary.MinutesToday</strong>
+    </div>
+    <div class="stat-card">
+        <span>Notificaciones sin leer</span>
+        <strong>@Model.Summary.UnreadNotifications</strong>
+    </div>
+    <div class="stat-card">
+        <span>Proximo recordatorio</span>
+        <strong>@(Model.Summary.NextReminder ?? "Sin recordatorios")</strong>
+    </div>
+</section>
+
+<section class="content-grid">
+    <article class="content-card">
+        <h2>Meta activa</h2>
+        @if (Model.Summary.ActiveGoal is null)
+        {
+            <p>No tienes una meta activa.</p>
+        }
+        else
+        {
+            <p>@Model.Summary.ActiveGoal.GoalType</p>
+            <p>@Model.Summary.ActiveGoalProgress / @Model.Summary.ActiveGoal.TargetValue</p>
+        }
+    </article>
+    <article class="content-card">
+        <h2>Ultimas actividades</h2>
+        <ul class="list-clean">
+            @foreach (var item in Model.Summary.RecentExercises)
+            {
+                <li>@item.PerformedOn.ToShortDateString() - @item.ExerciseType - @item.DurationMinutes min</li>
+            }
+        </ul>
+    </article>
+</section>

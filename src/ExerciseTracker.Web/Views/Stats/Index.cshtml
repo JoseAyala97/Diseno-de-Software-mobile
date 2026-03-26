@@ -1,0 +1,32 @@
+@model StatsViewModel
+@{
+    ViewData["Title"] = "Estadisticas";
+}
+
+<section class="content-card">
+    <h1>Estadisticas</h1>
+    <form id="stats-form" class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label">Fecha inicio</label>
+            <input class="form-control" id="startDate" type="date" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Fecha fin</label>
+            <input class="form-control" id="endDate" type="date" value="@Model.EndDate.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="col-md-4 d-flex align-items-end">
+            <button class="btn btn-primary w-100" type="submit">Actualizar</button>
+        </div>
+    </form>
+</section>
+
+<section class="section-grid" id="stats-summary">
+    <div class="stat-card"><span>Sesiones</span><strong data-stat="sessions">@Model.Summary.TotalSessions</strong></div>
+    <div class="stat-card"><span>Minutos</span><strong data-stat="minutes">@Model.Summary.TotalMinutes</strong></div>
+    <div class="stat-card"><span>Promedio</span><strong data-stat="average">@Model.Summary.AverageMinutesPerSession.ToString("0.0")</strong></div>
+    <div class="stat-card"><span>Mas frecuente</span><strong data-stat="frequent">@Model.Summary.MostFrequentExercise</strong></div>
+</section>
+
+@section Scripts {
+    <script src="~/js/stats.js" asp-append-version="true"></script>
+}
