@@ -1,7 +1,6 @@
 using ExerciseTracker.Application;
 using ExerciseTracker.Infrastructure;
 using ExerciseTracker.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
